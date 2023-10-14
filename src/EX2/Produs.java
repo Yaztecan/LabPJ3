@@ -40,8 +40,4 @@ public class Produs {
                 + "\nCantitate: " + getCantitate()
                 + "\nData de valabilitate: " + getDate();
     }
-
-
-
-
 }

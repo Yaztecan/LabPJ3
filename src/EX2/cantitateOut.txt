@@ -1,0 +1,15 @@
+
+Denumire: Coca-Cola
+Pret: 7.49
+Cantitate: 20
+Data de valabilitate: 2022-02-25
+
+Denumire: Rom
+Pret: 2.0
+Cantitate: 10
+Data de valabilitate: 2025-12-23
+
+Denumire: 7Days
+Pret: 3.99
+Cantitate: 25
+Data de valabilitate: 2023-10-10

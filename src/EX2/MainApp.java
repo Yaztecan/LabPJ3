@@ -31,13 +31,14 @@ public class MainApp {
                 """);
 
         String filePath = "C:\\Users\\Christian\\IdeaProjects\\LabPJ3\\src\\EX2\\produse.csv";
-        BufferedReader scanFile = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+        BufferedReader readFile = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+        BufferedWriter writeFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/EX2/cantitateOut.txt")));
 
         float total = 0;
 
         String line;
 
-        while(( line = scanFile.readLine())!= null) {
+        while(( line = readFile.readLine())!= null) {
 
             String[] value = line.split(",");
 
@@ -54,22 +55,18 @@ public class MainApp {
         do {System.out.print("\nAlegeti o optiune(a-e): ");
             String opt = scan.nextLine();
 
-            switch (opt){
-                case "a":
-                    afisare(produse);
-                    break;
-                case "b":
-                    afisareExpirate(produse);
-                    break;
-                case "c":
+            switch (opt) {
+                case "a" -> afisare(produse);
+                case "b" -> afisareExpirate(produse);
+                case "c" -> {
                     System.out.println("Ce produs doriti sa cumparati?");
                     String search = scan.nextLine();
-                    for(Produs p:produse) {
-                        if(search.equals(p.getDen().trim())){
+                    for (Produs p : produse) {
+                        if (search.equals(p.getDen().trim())) {
                             System.out.print("Cantitate dorita: ");
                             String q = scan.nextLine();
                             int z = Integer.parseInt(q);
-                            if(vanzare(produse,p,z)) {
+                            if (vanzare(produse, p, z)) {
                                 System.out.println("SOLD");
                                 float money = z * p.getPret();
                                 System.out.println("\n+" + Produs.incasari + " $");
@@ -77,23 +74,28 @@ public class MainApp {
                             }
                         }
                     }
-                    break;
-                case "d":
-                    break;
-                case "e":
-                    break;
-                case "$":
-                    System.out.println( "Total: " + total + " $");
-                    break;
-                case "EXIT":
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Optiune invalida!");
-                    break;
+                }
+                case "d" -> minim(produse);
+                case "e" -> {
+                    System.out.print("Dati cantitate: ");
+                    int x = Integer.parseInt(scan.nextLine());
+                    for(Produs pp:produse){
+                        if(pp.getCantitate() < x){
+                            String out = pp.toString();
+                            writeFile.write(out);
+                            writeFile.newLine();
+                        }
+                    }
+                    writeFile.close();
+                }
+                case "$" -> System.out.println("Total: " + total + " $");
+                case "EXIT" -> System.exit(0);
+                default -> System.out.println("Optiune invalida!");
             }
 
         }while(true);
+
+
     }
     public static void afisare(List<Produs> produse) {
         for(Produs produs: produse) {
@@ -124,4 +126,19 @@ public class MainApp {
             return false;
         }
     }
+
+    public static void minim(List<Produs> produse) {
+        float min = 999;
+        for (Produs p : produse) {
+            if (p.getPret() < min) {
+                min = p.getPret();
+            }
+        }
+        for(Produs produs: produse) {
+            if(produs.getPret() == min)
+                System.out.println(produs.toString());
+        }
+
+    }
+
 }
